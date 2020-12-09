@@ -32,7 +32,7 @@
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/demo.go" />
-    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
   </component>
   <component name="RunManager" selected="Go Build.go build demo.go">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application" singleton="true">
@@ -84,29 +84,33 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607413788859" />
-    <state width="914" height="230" key="GridCell.Tab.0.bottom" timestamp="1607422125373">
+    <state width="931" height="391" key="GridCell.Tab.0.bottom" timestamp="1607505550430">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="230" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607422125373" />
-    <state width="914" height="230" key="GridCell.Tab.0.center" timestamp="1607422125373">
+    <state width="931" height="391" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607505550430" />
+    <state width="931" height="391" key="GridCell.Tab.0.center" timestamp="1607505550430">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="230" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607422125373" />
-    <state width="914" height="230" key="GridCell.Tab.0.left" timestamp="1607422125373">
+    <state width="931" height="391" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607505550430" />
+    <state width="931" height="391" key="GridCell.Tab.0.left" timestamp="1607505550429">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="230" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607422125373" />
-    <state width="914" height="230" key="GridCell.Tab.0.right" timestamp="1607422125373">
+    <state width="931" height="391" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607505550429" />
+    <state width="931" height="391" key="GridCell.Tab.0.right" timestamp="1607505550430">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="230" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607422125373" />
-    <state x="461" y="164" key="SettingsEditor" timestamp="1607405841454">
+    <state width="931" height="391" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607505550430" />
+    <state x="65" y="43" width="829" height="665" key="Registry" timestamp="1607499340513">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607405841454" />
-    <state x="1103" y="230" width="672" height="678" key="search.everywhere.popup" timestamp="1607421584454">
+    <state x="65" y="43" width="829" height="665" key="Registry/0.0.1920.1040@0.0.1920.1040" timestamp="1607499340513" />
+    <state x="461" y="164" key="SettingsEditor" timestamp="1607499160681">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1103" y="230" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607421584454" />
+    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607499160681" />
+    <state x="1103" y="230" width="672" height="678" key="search.everywhere.popup" timestamp="1607499252276">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1103" y="230" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607499252276" />
   </component>
 </project>

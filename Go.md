@@ -353,3 +353,229 @@ fmt.Println(c2)
 ```
 
 复数有实部和虚部，`complex64` 的实部和虚部为32位，`complex128` 的实部和虚部为64位。
+
+#### 4）布尔值
+
+Go语言中以`bool`类型进行声明布尔型数据，布尔型数据只有`true（真）`和`false（假）`两个值。
+
+**注意：**
+
+1. 布尔类型变量的默认值为`false`。
+2. Go 语言中不允许将整型强制转换为布尔型.
+3. 布尔型无法参与数值运算，也无法与其他类型进行转换。
+
+#### 5）字符串
+
+Go语言中的字符串以原生数据类型出现，使用字符串就像使用其他原生数据类型（int、bool、float32、float64 等）一样。 Go 语言里的字符串的内部实现使用`UTF-8`编码。 字符串的值为`双引号(")`中的内容，可以在Go语言的源码中直接添加非ASCII码字符，例如：
+
+```go
+s1 := "hello"
+s2 := "你好"
+```
+
+##### 字符串转义符
+
+Go 语言的字符串常见转义符包含回车、换行、单双引号、制表符等，如下表所示。
+
+| 转义符 |                含义                |
+| :----: | :--------------------------------: |
+|  `\r`  |         回车符（返回行首）         |
+|  `\n`  | 换行符（直接跳到下一行的同列位置） |
+|  `\t`  |               制表符               |
+|  `\'`  |               单引号               |
+|  `\"`  |               双引号               |
+|  `\\`  |               反斜杠               |
+
+举个例子，我们要打印一个Windows平台下的一个文件路径：
+
+```go
+package main
+import (
+    "fmt"
+)
+func main() {
+    fmt.Println("str := \"c:\\Code\\lesson1\\go.exe\"")
+}
+```
+
+##### 多行字符串
+
+Go语言中要定义一个多行字符串时，就必须使用`反引号`字符：
+
+```go
+s1 := `第一行
+第二行
+第三行
+`
+fmt.Println(s1)
+```
+
+反引号间换行将被作为字符串中的换行，但是所有的转义字符均无效，文本将会原样输出。
+
+##### 字符串的常用操作
+
+|                方法                 |      介绍      |
+| :---------------------------------: | :------------: |
+|              len(str)               |     求长度     |
+|           +或fmt.Sprintf            |   拼接字符串   |
+|            strings.Split            |      分割      |
+|          strings.contains           |  判断是否包含  |
+| strings.HasPrefix,strings.HasSuffix | 前缀/后缀判断  |
+| strings.Index(),strings.LastIndex() | 子串出现的位置 |
+| strings.Join(a[]string, sep string) |    join操作    |
+
+```go
+s1:="aasdfasdfasdf"
+s2:="123"
+s3 := "asd"+"123"  //字符串拼接
+s4 := fmt.Sprintf(s1, s2)  //字符串拼接
+fmt.Println(s1, s2, s3, s4)
+fmt.Println(len(s1))  //字符串长度,utf-8是变长字符集，英文标点占用1个字节，中文占3个字节
+fmt.Println(s1[0])  //字符串索引,返回的是ascii字节码
+fmt.Printf("%c", s1[0])  //字符串索引字符
+fmt.Println("abc">"abcd")  //字符串比较 ==,>,<，比较机制是字符的对称比较
+fmt.Println(strings.Compare(s1,s2))  //字符串比较，比较机制是字符的对称比较，返回值0：a==b,1:a>b,-1:a<b
+
+fmt.Println(strings.Contains(s1, "as"))  //检测substr是否在s中
+fmt.Println(strings.ContainsAny(s1, "ah"))  //检测chars中的任意字符是否出现在s中
+fmt.Println(strings.ContainsAny(s1, "hj"))
+fmt.Println(strings.ContainsRune(s1, 'a'))  //检测 rune 字符是否出现在s中
+fmt.Println(strings.ContainsRune(s1, 97))  // 检测 rune 字符是否出现在s中，可用ascii码代替
+
+fmt.Println(strings.Count(s1, "asd"))  //统计s中非重叠substr的数量，若substr为“”，则返回len(s)+1
+fmt.Println(strings.Count(s1, ""))
+
+fmt.Println(strings.EqualFold("asd","asD"))  //检测s和t在忽略大小写的情况下是否相等
+
+fmt.Println(strings.Split(s1, "a"))  //使用sep切割s,返回字符串切片
+fmt.Println(strings.SplitN("go-Js-JavaScript","-", 2))  //在sep分割s, 使用n限制分割的元素数量，n=0返回nil,n<0表示不限制
+fmt.Println(strings.SplitN("go-Js-JavaScript","-", 0))
+fmt.Println(strings.SplitN("go-Js-JavaScript","-", -1))
+fmt.Println(strings.SplitAfter("go-Js-JavaScript","-"))  //在sep后分割字符串s,返回字符串切片
+fmt.Println(strings.SplitAfterN("go-Js-JavaScript","-", 2))  //在sep后分割s,使用n限制分割的元素个数，n=0返回nil,n<0表示不限制
+fmt.Println(strings.SplitAfterN("go-Js-JavaScript","-", 0))
+fmt.Println(strings.SplitAfterN("go-Js-JavaScript","-", -1))
+
+
+
+fmt.Println(strings.Fields("a s d f"))  //返回空格分割的字符串s, 等价于strings.Split("a s d f"," ")
+ff := func(c rune) bool {
+    return strings.ContainsRune(",|/", c)
+}
+fmt.Println(strings.FieldsFunc("go,python,c++/c,Js|JavaScript", ff))  //使用函数确定分隔符，来分割字符串
+
+fmt.Println(strings.HasPrefix("asdfasdf","as")) //检测s是否已字符串prefix作为前缀
+fmt.Println(strings.HasSuffix("asdfasdf","df")) //检测s是否已字符串suffix作为后缀
+
+fmt.Println(strings.Index("asdfasdf","d"))  //返回substr在s中第一次出现的索引位置，若没有则返回-1
+fmt.Println(strings.Index("asdfasdf","g"))
+fmt.Println(strings.IndexAny("asdfasdf","lmnd")) //返回chars中任意字符在s中第一次出现的索引位置，若没有出现则返回-1
+fmt.Println(strings.IndexByte("asdfasdf", 'h'))  //返回byte字符c在s中第一次出现的位置，若没有则返回-1
+fi := func(c rune) bool {
+    return strings.ContainsRune(",|/",c)
+}
+fmt.Println(strings.IndexFunc("go,python,c++/c,Js|JavaScript", fi))  //返回s中第一次满足函数f的rune字符的索引位置
+fmt.Println(strings.IndexRune("asdfasdf", 's'))  //返回rune字符r在s中第一次出现的索引位置，若没有则返回-1
+fmt.Println(strings.LastIndex("asdfasdf","sd"))  //返回substr在s中最后一次出现的索引位置，若没有则返回-1
+fmt.Println(strings.LastIndexAny("asdfasdf","agh"))  //返回chars任意字符在s中最后一次出现的索引位置，若没有则返回-1
+fmt.Println(strings.LastIndexByte("asdfasdf",'d'))  //返回byte字符c在s中最后一次出现的索引位置，若没有则返回-1
+fl := func(c rune) bool{
+    return strings.ContainsRune("./|", c)
+}
+fmt.Println(strings.LastIndexFunc("go,python,c++/c,Js|JavaScript",fl))  //返回s中字后一次满足函数fl的rune字符的索引位置，若没有则返回-1。
+fm := func(c rune) rune{
+    if strings.ContainsRune(",|/", c){
+        return '-'
+    } else {
+        return c
+    }
+}
+fmt.Println(strings.Map(fm,"go,Js|JavaScript"))  //返回s中每个字符经过映射函数mapping处理之后的字符
+
+fmt.Println(strings.Repeat("ps-", 3))  //返回s重复count次的字符串
+fmt.Println(strings.Replace("asdfasdfasdf", "s","S",2)) //在s中使用new替换old,n限定替换次数，n为负数表示没有限制
+fmt.Println(strings.Replace("asdfasdfasdf", "s","S",-1))
+
+
+ss := []string{"go","hank","python","php"}
+fmt.Println(strings.Join(ss, "-"))  //使用分隔符sep连接字符串切片a
+
+fmt.Println(strings.Title("hello go !"))  //返回 Title 化的字符串(首字符大写)
+fmt.Println(strings.ToTitle("hello go !"))  //返回所有字符 Title 化的字符串
+fmt.Println(strings.ToTitleSpecial(unicode.TurkishCase, "dünyanın ilk borsa yapısı Aizonai kabul edilir"))  //使用特定的规则将全部字符s都Title化
+
+
+fmt.Println(strings.ToLower("Hello Go !"))  //s小写转换
+fmt.Println(strings.ToLowerSpecial(unicode.TurkishCase, "Önnek İş"))  //使用特定的规则转换s到小写
+fmt.Println(strings.ToUpper("hello go !"))  //s大写转换
+fmt.Println(strings.ToUpperSpecial(unicode.TurkishCase, "örnek iş"))  //使用特定的规则转换s到大写
+
+fmt.Println(strings.Trim(" user name "," "))  //去除s两端的特定字符cutset
+ft:= func(c rune) bool{
+    return strings.ContainsRune(",/|",c)
+}
+fmt.Println(strings.TrimFunc("|/user name,/", ft))  //去除s两端满足函数ft的字符
+fmt.Println(strings.TrimLeft(" user name ", " "))  //去除s左端的特定字符cutset
+ftl:= func(c rune) bool{
+    return strings.ContainsRune(",/|",c)
+}
+fmt.Println(strings.TrimLeftFunc("|/user name,/", ftl))  //去除s左端的满足ftl的字符
+
+fmt.Println(strings.TrimRight(" user name ", " "))  //去除s右端的特定字符cutset
+ftr:= func(c rune) bool{
+    return strings.ContainsRune(",/|",c)
+}
+fmt.Println(strings.TrimRightFunc("|/user name,/", ftr))  //去除s右端的满足ftr的字符
+fmt.Println(strings.TrimPrefix("asdf_asdf","asdf_"))  //去除s的前缀prefix
+fmt.Println(strings.TrimSuffix("asdf_asdf","_asdf"))  //去除s的前缀suffix
+fmt.Println(strings.TrimSpace(" \t\nhello go\n\t\r\n"))  //去除s两端的空白字符
+```
+
+#### 6）byte 和 rune 类型
+
+组成每个字符串的元素叫做“字符”，可以通过遍历或者单个获取字符串元素获得字符。
+
+字符用单引号（‘）包裹起来，如：
+
+```go
+var a := '中'
+var b := 'x'
+```
+
+Go 语言的字符有以下两种：
+
+- unit8 类型，或者叫 byte 型，代表了 ASCII 码的一个字符
+- rune 类型，代表一个 UTF-8 字符
+
+当需要处理中文、日文或者其他复合字符时，则需要用到`rune`类型。`rune`类型实际是一个`int32`。
+
+Go 使用了特殊的 rune 类型来处理 Unicode，让基于 Unicode 的文本处理更为方便，也可以使用 byte 型进行默认字符串处理，性能和扩展性都有照顾。
+
+```go
+func main(){
+	s := "hello沙河"
+	for i:=0; i<len(s);i++{
+		fmt.Printf("%v(%c)", s[i],s[i])
+	}
+	fmt.Println()
+	for _, r:= range s{
+		fmt.Printf("%v(%c) ", r, r)
+	}
+	fmt.Println()
+}
+```
+
+输出：
+
+```go
+104(h)101(e)108(l)108(l)111(o)230(æ)178(²)153()230(æ)178(²)179(³)
+104(h) 101(e) 108(l) 108(l) 111(o) 27801(沙) 27827(河) 
+```
+
+因为UTF8编码下一个中文汉字由3~4个字节组成，所以我们不能简单的按照字节去遍历一个包含中文的字符串，否则就会出现上面输出中第一行的结果。
+
+字符串底层是一个byte数组，所以可以和`[]byte`类型相互转换。字符串是不能修改的 字符串是由byte字节组成，所以字符串的长度是byte字节的长度。 rune类型用来表示utf8字符，一个rune字符由一个或多个byte组成。
+
+##### 修改字符串
+
+要修改字符串，需要先将其转换成`[]rune`或`[]byte`，完成后再转换为`string`。无论哪种转换，都会重新分配内存，并复制字节数组。
