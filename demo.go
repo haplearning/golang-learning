@@ -259,15 +259,298 @@ const (
 //	fmt.Println()
 //}
 
-func main() {
-	s1 := "big"
+//func main() {
+	//s1 := "big"
+	//
+	//byteS1:=[]byte(s1)
+	//byteS1[0]='p'
+	//fmt.Println(s1, string(byteS1))
+	//
+	//s2:="白萝卜"
+	//runeS2 := []rune(s2)
+	//runeS2[0] = '红'
+	//fmt.Println(s2, string(runeS2))
 
-	byteS1:=[]byte(s1)
-	byteS1[0]='p'
-	fmt.Println(string(byteS1))
+	//var a,b = 3,4
+	//var c int
+	//c = int(math.Sqrt(float64(a*a +b*b)))
+	//fmt.Print(c)
 
-	s2:="白萝卜"
-	runeS2 := []rune(s2)
-	runeS2[0] = '红'
-	fmt.Println(string(runeS2))
+	//a:=1
+	//b:=1.2
+	//c:=true
+	//d:="aaa"
+	//
+	//fmt.Printf("%d(%t)\n",a, a)
+	//fmt.Printf("%d(%t)\n",b, b)
+	//fmt.Printf("%d(%t)\n",c, c)
+	//fmt.Printf("%d(%t)\n",d, d)
+	//
+	//s := "hello沙河小王子"
+	//count:=0
+	//runeS := []rune(s)
+	//for i:=0;i<len(runeS);i++{
+	//	if len(string(runeS[i]))==3 {
+	//		count += 1
+	//	}
+	//}
+	//fmt.Printf("汉字数量：%d", count)
+//}
+
+//运算符
+//func main() {
+	//算术运算符：+,-,*,/,=,%,
+	//关系运算符：>,>=,<,<=,==,!=
+	//逻辑运算符：&&(and),||(or),!(非)
+	//位运算符：&(位与)，|(位或)，^(异或)，>>(右移n位，*2**n)，<<(左移n位，/2**n)
+	//赋值运算符：=，+=，-=，*=，/=，%=，<<=，>>=，&=，|=，^=
+
+	//s := [5]int{1, 2, 3, 1, 2}
+	//fmt.Println(s[1]^s[2]^s[3]^s[4]^s[5])
+//}
+
+//流程控制
+//if else 分支结构
+func ifdemo1 () {
+
+	score:=65
+	if score >= 90 {
+		fmt.Println("A")
+	}else if score>=80 {
+		fmt.Println("B")
+	}else{
+		fmt.Println("C")
+	}
+	fmt.Println(score)
 }
+
+func ifdemo2 () {
+	//if else 分支结构
+
+	if score:=65; score >= 90 { //此时socre为局部变量
+		fmt.Println("A")
+	}else if score>=80 {
+		fmt.Println("B")
+	}else{
+		fmt.Println("C")
+	}
+	//fmt.Println(score)
+}
+
+func fordemo()  {
+	//语法：
+	//for 初始语句;条件表达式;结束语句{
+	//}
+	for i:=0;i<10;i++{
+		fmt.Println(i)
+	}
+
+	i:=0
+	for ;i<10;i++{ //省略初始语句（需提前定义）
+		fmt.Println(i)
+	}
+
+	i=0
+	for i<10 {  //等价于while,省略初始语句、结束语句（需提前定义初始语句，在结构体中定义结束语句）
+		fmt.Println(i)
+		i++
+	}
+}
+
+func forrangedemo(){
+	s:=[]string{"a","b","c","d"}
+	for i,v:=range s{
+		fmt.Println(i,v)
+	}
+}
+
+func switchdemo(){
+	finger:=3
+	switch finger {
+	case 1:
+		fmt.Println("a")
+	case 2,3,4: //case分支可以有多个值
+		fmt.Println("b")
+	default:  //只能有一个default
+		fmt.Println("无效的输入")
+	}
+	
+	age :=30
+	switch  {  //分支用表达式时，switch后无需再跟变量
+	case age < 25:
+		fmt.Println("好好学习吧")
+	case age > 25 && age < 35:
+		fmt.Println("好好工作吧")
+		  //fallthrough语法可以执行满足条件case的下一个case
+	case age > 60:
+		fmt.Println("好好享受吧")
+		fallthrough
+	default:
+		fmt.Println("活着真好")
+	}
+}
+
+func gotodemo1(){
+	var breakflag bool
+	for i:=0;i<10;i++{
+		for j:=0;j<10;j++{
+			if j==2{
+				breakflag=true
+				break
+			}
+			fmt.Printf("%v-%v\n",i,j)
+		}
+		if breakflag{
+			break
+		}
+	}
+}
+
+func gotodemo2()  {
+	for i:=0;i<10;i++{
+		for j:=0;j<10;j++{
+			if j==2{
+				goto breakflag
+			}
+			fmt.Printf("%v-%v\n",i,j)
+		}
+	}
+	breakflag:
+}
+
+func breakdemo()  {
+	breakdemo:
+	for i:=0;i<10;i++{
+		for j:=0;j<10;j++{
+			if i==2&&j==2{
+				break breakdemo
+			}
+			fmt.Println(i,j)
+		}
+	}
+}
+
+func continuedemo(){
+	forloop:
+	for i:=0;i<5;i++{
+		for j:=0;j<5;j++{
+			if i==2&&j==2{
+				continue forloop
+			}
+			fmt.Println(i,j)
+		}
+	}
+}
+
+func multtable(){
+	for i:=1;i<10;i++{
+		for j:=1;j<=i;j++{
+			fmt.Printf("%v*%v=%v ",j,i,i*j)
+		}
+		fmt.Println()
+	}
+}
+
+func revemulttale(){
+	for i:=9;i>0;i--{
+		for j:=1;j<=i;j++{
+			fmt.Printf("%v*%v=%v ",j,i,i*j)
+		}
+		fmt.Println()
+	}
+}
+
+//数组
+func arrdemo(){
+	//数组定义
+	var a [3]int  //var 变量名 [元素数量]T
+	var b [5]int  //长度固定，[3]int 和[5]int 是不同的类型,默认为初始值
+	fmt.Println(a,b)
+	//初始化
+	var c [3] int  //默认初始值为零值
+	var d = [3]int {1, 2}   //使用指定的值初始化
+	var e = [3]string{"a","b","c"}
+	var f = [3]string{"a","b"}
+	fmt.Println(c,d,e,f[2])
+	//自动确定数组长度
+	var g = [...]int{1,2}
+	fmt.Printf("%T",g)
+	//指定索引值
+	var h = [...]int{0:3,2:2}
+	fmt.Println(h, len(h))
+	fmt.Printf("%T",h)
+
+	//数组遍历
+	for i:=0;i<len(e);i++{
+		fmt.Println(e[i])
+	}
+	for _,v := range d{
+		fmt.Println(v)
+	}
+	//多维数组
+	var i =[3][2]int{
+		{1,2},{3,4},{5,6},
+	}
+	fmt.Println(i)
+	fmt.Println(i[2][1])  //支持索引取值
+	var j = [...][2]int{  //多维数组只能在外层让编译器推导长度
+		{7,8},{9,10},
+	}
+	fmt.Printf("%T--%v",j,j)
+	fmt.Println(j[0][1])
+
+
+	//二维数组的遍历
+	for _,v1 :=range i{
+		for _,v2 :=range v1{
+			fmt.Println(v2)
+		}
+	}
+
+	k:=[]int{1,2,3}
+	fmt.Println(len(k))
+	k=append(k, 4)
+	fmt.Println(k)
+
+
+	fmt.Printf("%T",0)
+	m:=[]int{}
+	fmt.Println(m)
+
+	//数组是值类型，赋值和传参会复制整个数组，改变副本的值，原数据不会改变
+
+}
+
+func modifyArr1(x [3]int)  {
+	x[0]=100
+}
+func modifyArr2(x [][2]int){
+	x[2][0]=100
+}
+func modifydemo(){
+	a:=[...]int{10,20,30}
+	modifyArr1(a)
+	b:=a
+	b[1]=200
+	fmt.Println(a)
+
+	c:=[][2]int{
+		{1,2},{3,4},{5,6},
+	}
+	modifyArr2(c)
+	fmt.Println(c)
+}
+func main()  {
+	//ifdemo1()
+	//ifdemo2()
+	//fordemo()
+	//forrangedemo()
+	//switchdemo()
+	//gotodemo2()
+	//continuedemo()
+	//multtable()
+	//revemulttale()
+	arrdemo()
+	modifydemo()
+}
+
