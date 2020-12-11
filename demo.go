@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+	"strings"
+	"unicode"
+)
 
 //变量
 
@@ -136,178 +141,178 @@ const (
 //	fmt.Println(s1)
 //}
 
-//func main()  {
-//	s1:="aasdfasdfasdf"
-//	s2:="123"
-//	s3 := "asd"+"123"  //字符串拼接
-//	s4 := fmt.Sprintf(s1, s2)  //字符串拼接
-//	fmt.Println(s1, s2, s3, s4)
-//	fmt.Println(len(s1))  //字符串长度,utf-8 是变长字符集，英文标点占用1个字节，中文占用3个字节。
-//	fmt.Println(s1[0])  //字符串索引,返回的是ascii字节码
-//	fmt.Printf("%c", s1[0])  //字符串索引字符
-//	fmt.Println("abc">"abcd")  //字符串比较 ==,>,<，比较机制是字符的对称比较
-//	fmt.Println(strings.Compare(s1,s2))  //字符串比较，比较机制是字符的对称比较，返回值0：a==b,1:a>b,-1:a<b
-//
-//	fmt.Println(strings.Contains(s1, "as"))  //检测substr是否在s中
-//	fmt.Println(strings.ContainsAny(s1, "ah"))  //检测chars中的任意字符是否出现在s中
-//	fmt.Println(strings.ContainsAny(s1, "hj"))
-//	fmt.Println(strings.ContainsRune(s1, 'a'))  //检测 rune 字符是否出现在s中
-//	fmt.Println(strings.ContainsRune(s1, 97))  // 检测 rune 字符是否出现在s中，可用ascii码代替
-//
-//	fmt.Println(strings.Count(s1, "asd"))  //统计s中非重叠substr的数量，若substr为“”，则返回len(s)+1
-//	fmt.Println(strings.Count(s1, ""))
-//
-//	fmt.Println(strings.EqualFold("asd","asD"))  //检测s和t在忽略大小写的情况下是否相等
-//
-//	fmt.Println(strings.Split(s1, "a"))  //使用sep切割s,返回字符串切片
-//	fmt.Println(strings.SplitN("go-Js-JavaScript","-", 2))  //在sep分割s, 使用n限制分割的元素数量，n=0返回nil,n<0表示不限制
-//	fmt.Println(strings.SplitN("go-Js-JavaScript","-", 0))
-//	fmt.Println(strings.SplitN("go-Js-JavaScript","-", -1))
-//	fmt.Println(strings.SplitAfter("go-Js-JavaScript","-"))  //在sep后分割字符串s,返回字符串切片
-//	fmt.Println(strings.SplitAfterN("go-Js-JavaScript","-", 2))  //在sep后分割s,使用n限制分割的元素个数，n=0返回nil,n<0表示不限制
-//	fmt.Println(strings.SplitAfterN("go-Js-JavaScript","-", 0))
-//	fmt.Println(strings.SplitAfterN("go-Js-JavaScript","-", -1))
-//
-//
-//
-//	fmt.Println(strings.Fields("a s d f"))  //返回空格分割的字符串s, 等价于strings.Split("a s d f"," ")
-//	ff := func(c rune) bool {
-//		return strings.ContainsRune(",|/", c)
-//	}
-//	fmt.Println(strings.FieldsFunc("go,python,c++/c,Js|JavaScript", ff))  //使用函数确定分隔符，来分割字符串
-//
-//	fmt.Println(strings.HasPrefix("asdfasdf","as")) //检测s是否已字符串prefix作为前缀
-//	fmt.Println(strings.HasSuffix("asdfasdf","df")) //检测s是否已字符串suffix作为后缀
-//
-//	fmt.Println(strings.Index("asdfasdf","d"))  //返回substr在s中第一次出现的索引位置，若没有则返回-1
-//	fmt.Println(strings.Index("asdfasdf","g"))
-//	fmt.Println(strings.IndexAny("asdfasdf","lmnd")) //返回chars中任意字符在s中第一次出现的索引位置，若没有出现则返回-1
-//	fmt.Println(strings.IndexByte("asdfasdf", 'h'))  //返回byte字符c在s中第一次出现的位置，若没有则返回-1
-//	fi := func(c rune) bool {
-//		return strings.ContainsRune(",|/",c)
-//	}
-//	fmt.Println(strings.IndexFunc("go,python,c++/c,Js|JavaScript", fi))  //返回s中第一次满足函数f的rune字符的索引位置
-//	fmt.Println(strings.IndexRune("asdfasdf", 's'))  //返回rune字符r在s中第一次出现的索引位置，若没有则返回-1
-//	fmt.Println(strings.LastIndex("asdfasdf","sd"))  //返回substr在s中最后一次出现的索引位置，若没有则返回-1
-//	fmt.Println(strings.LastIndexAny("asdfasdf","agh"))  //返回chars任意字符在s中最后一次出现的索引位置，若没有则返回-1
-//	fmt.Println(strings.LastIndexByte("asdfasdf",'d'))  //返回byte字符c在s中最后一次出现的索引位置，若没有则返回-1
-//	fl := func(c rune) bool{
-//		return strings.ContainsRune("./|", c)
-//	}
-//	fmt.Println(strings.LastIndexFunc("go,python,c++/c,Js|JavaScript",fl))  //返回s中字后一次满足函数fl的rune字符的索引位置，若没有则返回-1。
-//	fm := func(c rune) rune{
-//		if strings.ContainsRune(",|/", c){
-//			return '-'
-//		} else {
-//			return c
-//		}
-//	}
-//	fmt.Println(strings.Map(fm,"go,Js|JavaScript"))  //返回s中每个字符经过映射函数mapping处理之后的字符
-//
-//	fmt.Println(strings.Repeat("ps-", 3))  //返回s重复count次的字符串
-//	fmt.Println(strings.Replace("asdfasdfasdf", "s","S",2)) //在s中使用new替换old,n限定替换次数，n为负数表示没有限制
-//	fmt.Println(strings.Replace("asdfasdfasdf", "s","S",-1))
-//
-//
-//	ss := []string{"go","hank","python","php"}
-//	fmt.Println(strings.Join(ss, "-"))  //使用分隔符sep连接字符串切片a
-//
-//	fmt.Println(strings.Title("hello go !"))  //返回 Title 化的字符串(首字符大写)
-//	fmt.Println(strings.ToTitle("hello go !"))  //返回所有字符 Title 化的字符串
-//	fmt.Println(strings.ToTitleSpecial(unicode.TurkishCase, "dünyanın ilk borsa yapısı Aizonai kabul edilir"))  //使用特定的规则将全部字符s都Title化
-//
-//
-//	fmt.Println(strings.ToLower("Hello Go !"))  //s小写转换
-//	fmt.Println(strings.ToLowerSpecial(unicode.TurkishCase, "Önnek İş"))  //使用特定的规则转换s到小写
-//	fmt.Println(strings.ToUpper("hello go !"))  //s大写转换
-//	fmt.Println(strings.ToUpperSpecial(unicode.TurkishCase, "örnek iş"))  //使用特定的规则转换s到大写
-//
-//	fmt.Println(strings.Trim(" user name "," "))  //去除s两端的特定字符cutset
-//	ft:= func(c rune) bool{
-//		return strings.ContainsRune(",/|",c)
-//	}
-//	fmt.Println(strings.TrimFunc("|/user name,/", ft))  //去除s两端满足函数ft的字符
-//	fmt.Println(strings.TrimLeft(" user name ", " "))  //去除s左端的特定字符cutset
-//	ftl:= func(c rune) bool{
-//		return strings.ContainsRune(",/|",c)
-//	}
-//	fmt.Println(strings.TrimLeftFunc("|/user name,/", ftl))  //去除s左端的满足ftl的字符
-//
-//	fmt.Println(strings.TrimRight(" user name ", " "))  //去除s右端的特定字符cutset
-//	ftr:= func(c rune) bool{
-//		return strings.ContainsRune(",/|",c)
-//	}
-//	fmt.Println(strings.TrimRightFunc("|/user name,/", ftr))  //去除s右端的满足ftr的字符
-//	fmt.Println(strings.TrimPrefix("asdf_asdf","asdf_"))  //去除s的前缀prefix
-//	fmt.Println(strings.TrimSuffix("asdf_asdf","_asdf"))  //去除s的前缀suffix
-//	fmt.Println(strings.TrimSpace(" \t\nhello go\n\t\r\n"))  //去除s两端的空白字符
-//}
+func str_funcs()  {
+	s1:="aasdfasdfasdf"
+	s2:="123"
+	s3 := "asd"+"123"  //字符串拼接
+	s4 := fmt.Sprintf(s1, s2)  //字符串拼接
+	fmt.Println(s1, s2, s3, s4)
+	fmt.Println(len(s1))  //字符串长度,utf-8 是变长字符集，英文标点占用1个字节，中文占用3个字节。
+	fmt.Println(s1[0])  //字符串索引,返回的是ascii字节码
+	fmt.Printf("%c", s1[0])  //字符串索引字符
+	fmt.Println("abc">"abcd")  //字符串比较 ==,>,<，比较机制是字符的对称比较
+	fmt.Println(strings.Compare(s1,s2))  //字符串比较，比较机制是字符的对称比较，返回值0：a==b,1:a>b,-1:a<b
+
+	fmt.Println(strings.Contains(s1, "as"))  //检测substr是否在s中
+	fmt.Println(strings.ContainsAny(s1, "ah"))  //检测chars中的任意字符是否出现在s中
+	fmt.Println(strings.ContainsAny(s1, "hj"))
+	fmt.Println(strings.ContainsRune(s1, 'a'))  //检测 rune 字符是否出现在s中
+	fmt.Println(strings.ContainsRune(s1, 97))  // 检测 rune 字符是否出现在s中，可用ascii码代替
+
+	fmt.Println(strings.Count(s1, "asd"))  //统计s中非重叠substr的数量，若substr为“”，则返回len(s)+1
+	fmt.Println(strings.Count(s1, ""))
+
+	fmt.Println(strings.EqualFold("asd","asD"))  //检测s和t在忽略大小写的情况下是否相等
+
+	fmt.Println(strings.Split(s1, "a"))  //使用sep切割s,返回字符串切片
+	fmt.Println(strings.SplitN("go-Js-JavaScript","-", 2))  //在sep分割s, 使用n限制分割的元素数量，n=0返回nil,n<0表示不限制
+	fmt.Println(strings.SplitN("go-Js-JavaScript","-", 0))
+	fmt.Println(strings.SplitN("go-Js-JavaScript","-", -1))
+	fmt.Println(strings.SplitAfter("go-Js-JavaScript","-"))  //在sep后分割字符串s,返回字符串切片
+	fmt.Println(strings.SplitAfterN("go-Js-JavaScript","-", 2))  //在sep后分割s,使用n限制分割的元素个数，n=0返回nil,n<0表示不限制
+	fmt.Println(strings.SplitAfterN("go-Js-JavaScript","-", 0))
+	fmt.Println(strings.SplitAfterN("go-Js-JavaScript","-", -1))
+
+
+
+	fmt.Println(strings.Fields("a s d f"))  //返回空格分割的字符串s, 等价于strings.Split("a s d f"," ")
+	ff := func(c rune) bool {
+		return strings.ContainsRune(",|/", c)
+	}
+	fmt.Println(strings.FieldsFunc("go,python,c++/c,Js|JavaScript", ff))  //使用函数确定分隔符，来分割字符串
+
+	fmt.Println(strings.HasPrefix("asdfasdf","as")) //检测s是否已字符串prefix作为前缀
+	fmt.Println(strings.HasSuffix("asdfasdf","df")) //检测s是否已字符串suffix作为后缀
+
+	fmt.Println(strings.Index("asdfasdf","d"))  //返回substr在s中第一次出现的索引位置，若没有则返回-1
+	fmt.Println(strings.Index("asdfasdf","g"))
+	fmt.Println(strings.IndexAny("asdfasdf","lmnd")) //返回chars中任意字符在s中第一次出现的索引位置，若没有出现则返回-1
+	fmt.Println(strings.IndexByte("asdfasdf", 'h'))  //返回byte字符c在s中第一次出现的位置，若没有则返回-1
+	fi := func(c rune) bool {
+		return strings.ContainsRune(",|/",c)
+	}
+	fmt.Println(strings.IndexFunc("go,python,c++/c,Js|JavaScript", fi))  //返回s中第一次满足函数f的rune字符的索引位置
+	fmt.Println(strings.IndexRune("asdfasdf", 's'))  //返回rune字符r在s中第一次出现的索引位置，若没有则返回-1
+	fmt.Println(strings.LastIndex("asdfasdf","sd"))  //返回substr在s中最后一次出现的索引位置，若没有则返回-1
+	fmt.Println(strings.LastIndexAny("asdfasdf","agh"))  //返回chars任意字符在s中最后一次出现的索引位置，若没有则返回-1
+	fmt.Println(strings.LastIndexByte("asdfasdf",'d'))  //返回byte字符c在s中最后一次出现的索引位置，若没有则返回-1
+	fl := func(c rune) bool{
+		return strings.ContainsRune("./|", c)
+	}
+	fmt.Println(strings.LastIndexFunc("go,python,c++/c,Js|JavaScript",fl))  //返回s中字后一次满足函数fl的rune字符的索引位置，若没有则返回-1。
+	fm := func(c rune) rune{
+		if strings.ContainsRune(",|/", c){
+			return '-'
+		} else {
+			return c
+		}
+	}
+	fmt.Println(strings.Map(fm,"go,Js|JavaScript"))  //返回s中每个字符经过映射函数mapping处理之后的字符
+
+	fmt.Println(strings.Repeat("ps-", 3))  //返回s重复count次的字符串
+	fmt.Println(strings.Replace("asdfasdfasdf", "s","S",2)) //在s中使用new替换old,n限定替换次数，n为负数表示没有限制
+	fmt.Println(strings.Replace("asdfasdfasdf", "s","S",-1))
+
+
+	ss := []string{"go","hank","python","php"}
+	fmt.Println(strings.Join(ss, "-"))  //使用分隔符sep连接字符串切片a
+
+	fmt.Println(strings.Title("hello go !"))  //返回 Title 化的字符串(首字符大写)
+	fmt.Println(strings.ToTitle("hello go !"))  //返回所有字符 Title 化的字符串
+	fmt.Println(strings.ToTitleSpecial(unicode.TurkishCase, "dünyanın ilk borsa yapısı Aizonai kabul edilir"))  //使用特定的规则将全部字符s都Title化
+
+
+	fmt.Println(strings.ToLower("Hello Go !"))  //s小写转换
+	fmt.Println(strings.ToLowerSpecial(unicode.TurkishCase, "Önnek İş"))  //使用特定的规则转换s到小写
+	fmt.Println(strings.ToUpper("hello go !"))  //s大写转换
+	fmt.Println(strings.ToUpperSpecial(unicode.TurkishCase, "örnek iş"))  //使用特定的规则转换s到大写
+
+	fmt.Println(strings.Trim(" user name "," "))  //去除s两端的特定字符cutset
+	ft:= func(c rune) bool{
+		return strings.ContainsRune(",/|",c)
+	}
+	fmt.Println(strings.TrimFunc("|/user name,/", ft))  //去除s两端满足函数ft的字符
+	fmt.Println(strings.TrimLeft(" user name ", " "))  //去除s左端的特定字符cutset
+	ftl:= func(c rune) bool{
+		return strings.ContainsRune(",/|",c)
+	}
+	fmt.Println(strings.TrimLeftFunc("|/user name,/", ftl))  //去除s左端的满足ftl的字符
+
+	fmt.Println(strings.TrimRight(" user name ", " "))  //去除s右端的特定字符cutset
+	ftr:= func(c rune) bool{
+		return strings.ContainsRune(",/|",c)
+	}
+	fmt.Println(strings.TrimRightFunc("|/user name,/", ftr))  //去除s右端的满足ftr的字符
+	fmt.Println(strings.TrimPrefix("asdf_asdf","asdf_"))  //去除s的前缀prefix
+	fmt.Println(strings.TrimSuffix("asdf_asdf","_asdf"))  //去除s的前缀suffix
+	fmt.Println(strings.TrimSpace(" \t\nhello go\n\t\r\n"))  //去除s两端的空白字符
+}
 
 //遍历字符串
-//func main(){
-//	s := "hello沙河"
-//	fmt.Println(len(s))
-//	for i:=0; i<len(s);i++{
-//		fmt.Println(i)
-//		fmt.Printf("%v(%c)", s[i],s[i])
-//	}
-//	fmt.Println()
-//	for i, r:= range s{
-//		fmt.Println(i)
-//		fmt.Printf("%v(%c) ", r, r)
-//	}
-//	fmt.Println()
-//}
+func traversal_str(){
+	s := "hello沙河"
+	fmt.Println(len(s))
+	for i:=0; i<len(s);i++{
+		fmt.Println(i)
+		fmt.Printf("%v(%c)", s[i],s[i])
+	}
+	fmt.Println()
+	for i, r:= range s{
+		fmt.Println(i)
+		fmt.Printf("%v(%c) ", r, r)
+	}
+	fmt.Println()
+}
 
-//func main() {
-	//s1 := "big"
-	//
-	//byteS1:=[]byte(s1)
-	//byteS1[0]='p'
-	//fmt.Println(s1, string(byteS1))
-	//
-	//s2:="白萝卜"
-	//runeS2 := []rune(s2)
-	//runeS2[0] = '红'
-	//fmt.Println(s2, string(runeS2))
+func type_trans() {
+	s1 := "big"
 
-	//var a,b = 3,4
-	//var c int
-	//c = int(math.Sqrt(float64(a*a +b*b)))
-	//fmt.Print(c)
+	byteS1:=[]byte(s1)
+	byteS1[0]='p'
+	fmt.Println(s1, string(byteS1))
 
-	//a:=1
-	//b:=1.2
-	//c:=true
-	//d:="aaa"
-	//
-	//fmt.Printf("%d(%t)\n",a, a)
-	//fmt.Printf("%d(%t)\n",b, b)
-	//fmt.Printf("%d(%t)\n",c, c)
-	//fmt.Printf("%d(%t)\n",d, d)
-	//
-	//s := "hello沙河小王子"
-	//count:=0
-	//runeS := []rune(s)
-	//for i:=0;i<len(runeS);i++{
-	//	if len(string(runeS[i]))==3 {
-	//		count += 1
-	//	}
-	//}
-	//fmt.Printf("汉字数量：%d", count)
-//}
+	s2:="白萝卜"
+	runeS2 := []rune(s2)
+	runeS2[0] = '红'
+	fmt.Println(s2, string(runeS2))
+
+	var a,b = 3,4
+	var c int
+	c = int(math.Sqrt(float64(a*a +b*b)))
+	fmt.Print(c)
+
+	d:=1
+	e:=1.2
+	f:=true
+	g:="aaa"
+
+	fmt.Printf("%d(%t)\n",d, d)
+	fmt.Printf("%d(%t)\n",e, e)
+	fmt.Printf("%d(%t)\n",f, f)
+	fmt.Printf("%d(%t)\n",g, g)
+
+	s := "hello沙河小王子"
+	count:=0
+	runeS := []rune(s)
+	for i:=0;i<len(runeS);i++{
+		if len(string(runeS[i]))==3 {
+			count += 1
+		}
+	}
+	fmt.Printf("汉字数量：%d", count)
+}
 
 //运算符
-//func main() {
+func oprater_demo() {
 	//算术运算符：+,-,*,/,=,%,
 	//关系运算符：>,>=,<,<=,==,!=
 	//逻辑运算符：&&(and),||(or),!(非)
 	//位运算符：&(位与)，|(位或)，^(异或)，>>(右移n位，*2**n)，<<(左移n位，/2**n)
 	//赋值运算符：=，+=，-=，*=，/=，%=，<<=，>>=，&=，|=，^=
 
-	//s := [5]int{1, 2, 3, 1, 2}
-	//fmt.Println(s[1]^s[2]^s[3]^s[4]^s[5])
-//}
+	s := [5]int{1, 2, 3, 1, 2}
+	fmt.Println(s[0]^s[1]^s[2]^s[3]^s[4])
+}
 
 //流程控制
 //if else 分支结构
@@ -540,6 +545,43 @@ func modifydemo(){
 	modifyArr2(c)
 	fmt.Println(c)
 }
+
+//切片
+func slice_demo(){
+	//切片声明：var name []T
+	var a []string  //声明切片
+	var b = []int{}   //声明切片并初始化
+	var c =[]bool{false,true}  //声明切片并初始化
+	//var d =[]bool{false,true}  //声明切片并初始化
+	fmt.Println(a, b, c) //[] [] [flase,true]
+	fmt.Println(a==nil)  //true
+	fmt.Println(b==nil)  //false
+	fmt.Println(c==nil)  //false
+	//fmt.Println(c==d)  //切片是引用类型，不支持直接比较，只能和nil比较
+
+	e:=[5]int{1,2,3,4,5}
+	s:=e[1:3]  //s:=a[low:high] 简单表达式
+	//e[:3]  等价于 e[0:3]
+	//e[1:]  等价于 e[1:len(e)]
+	//e[:]  等价于 e[0:len(e)]
+	fmt.Printf("s:%v len(s):%v cap(s):%v\n",s,len(s),cap(s))  //s:[2 3] len(s):2 cap(s):4
+	s1 :=s[3:4]  //切片再切片时，索引上限时cap(s) 而不是 len(s)
+	fmt.Printf("s1:%v len(s1):%v cap(s):%v\n", s1, len(s1), cap(s1))  //s1:[5] len(s1):1 cap(s):1
+
+	t:=e[1:3:5]  //t:=e[low:high:max]  容量为max-low
+	t1:=e[3:5]  //只有low 能省略
+	fmt.Printf("t:%v len(t):%v cap(t):%v\n",t,len(t),cap(t))  //t:[2 3] len(t):2 cap(t):4
+	fmt.Printf("t1:%v len(t1):%v cap(t1):%v\n",t1,len(t1),cap(t1))  //t1:[4 5] len(t1):2 cap(t1):2
+
+	//使用make()构造切片: make([]T,size,cap)
+	f:=make([]int, 2, 10)
+	fmt.Printf("f:%v len(f):%v cap(f):%v\n",f,len(f),cap(f)) //f:[0 0] len(f):2 cap(f):10
+	//切片本质：对底层数组的封装，包含以下三个信息：1)底层数组的指针 2)切片长度len 3)切片的容量cap
+	var g =[]int{}
+	fmt.Printf("type:%T g:%v len(g):%v cap(g):%v isnil:%v\n",g, g,len(g),cap(g), g==nil)
+
+}
+
 func main()  {
 	//ifdemo1()
 	//ifdemo2()
@@ -550,7 +592,7 @@ func main()  {
 	//continuedemo()
 	//multtable()
 	//revemulttale()
-	arrdemo()
-	modifydemo()
+	//arrdemo()
+	//modifydemo()
+	slice_demo()
 }
-
