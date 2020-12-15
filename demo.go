@@ -551,7 +551,7 @@ func slice_demo(){
 	//切片声明：var name []T
 	var a []string  //声明切片
 	var b = []int{}   //声明切片并初始化
-	var c =[]bool{false,true}  //声明切片并初始化
+	var c =[]bool{}  //声明切片并初始化
 	//var d =[]bool{false,true}  //声明切片并初始化
 	fmt.Println(a, b, c) //[] [] [flase,true]
 	fmt.Println(a==nil)  //true
@@ -579,6 +579,62 @@ func slice_demo(){
 	//切片本质：对底层数组的封装，包含以下三个信息：1)底层数组的指针 2)切片长度len 3)切片的容量cap
 	var g =[]int{}
 	fmt.Printf("type:%T g:%v len(g):%v cap(g):%v isnil:%v\n",g, g,len(g),cap(g), g==nil)
+
+	//判断切片是否为空需用 len(s)==0 而不是 s==nil
+	fmt.Printf("a:%v len(a):%v a==nil?%v\n", a,len(a),a==nil)
+	fmt.Printf("a:%v len(a):%v a==nil?%v\n", b,len(b),b==nil)  //初始化虽len(s)=0 但 !=nil
+	fmt.Printf("a:%v len(a):%v a==nil?%v\n", c,len(c),c==nil)  //初始化虽len(s)=0 但 !=nil
+
+	//切片为引用类型，拷贝后变量共享底层数组，一个变化会影响另一个切片
+	s2 := make([]int, 3)
+	s3 :=s2
+	s3[1]=100
+	fmt.Println(s2)  //[0 100 0]
+	fmt.Println(s3)  //[0 100 0]
+
+	//切片遍历
+	s4:=[]int{1,2,3,4}
+	for i:=0;i<len(s4);i++{
+		fmt.Println(i, s4[i])
+	}
+
+	for idx,v :=range s4{
+		fmt.Println(idx, v)
+	}
+
+	//添加方法 append()
+	var s5 []int   //var 声明的零值切片可直接再append()使用，无需初始化
+	s5 = append(s5,1) //[1]
+	s5 = append(s5, 2,3,4)  //[1 2 3 4]
+	s6 :=[]int{5,6,7}  //[1 2 3 4 5 6 7]
+	s5 = append(s5, s6...)
+	fmt.Println(s5)
+
+	//append()添加元素和切片扩容，每次扩容后都是扩容前的2倍
+	var numslice []int
+	for i:=0;i<10;i++{
+		numslice = append(numslice,i)
+		fmt.Printf("%v len:%d cap:%d ptr:%p\n", numslice, len(numslice), cap(numslice),numslice)
+	}
+
+	//使用copy(destSlice, srcSlice []T) 将src切片元素复制到dest中
+	h:=[]int{1,2,3,4,5}
+	j:=h
+	fmt.Println(h,j)  //[1 2 3 4 5] [1 2 3 4 5]
+	j[0]=1000  //切片是引用类型，h、j都指向同一块内存空间
+	fmt.Println(h, j)  //[1000 2 3 4 5] [1000 2 3 4 5]
+	k:=[]int{1,2,3}
+	copy(k, h)  //
+	k[1]=2000
+	fmt.Println(h, k)
+
+	//删除切片中的元素没有专门的方法，可以通过切片特性删除
+	l:=[]int{30,31,32,33,34}
+	//删除索引为2的元素
+	l=append(l[:2], l[3:]...)
+	fmt.Println(l)
+
+
 
 }
 
