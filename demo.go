@@ -5,6 +5,9 @@ import (
 	"math"
 	"strings"
 	"unicode"
+	"math/rand"
+	"time"
+	"sort"
 )
 
 //变量
@@ -633,9 +636,104 @@ func slice_demo(){
 	//删除索引为2的元素
 	l=append(l[:2], l[3:]...)
 	fmt.Println(l)
+}
 
+func homework(){
+	var a=make([]string,5,10)
+	for i:=0;i<10;i++{
+		a=append(a, fmt.Sprintf("%v", i))
+	}
+	fmt.Println(a)
+	fmt.Println(len(a))
+	fmt.Println(cap(a))
+}
 
+func map_demo(){
+	//定义map  map[KeyType]ValueType
+	//使用make 创建map：make(map[KeyType]ValueType, [cap])
+	scoreMap:=make(map[string]int, 8)
 
+	scoreMap["张三"] = 90
+	scoreMap["小明"] = 100
+	fmt.Println(scoreMap)
+	fmt.Println(scoreMap["小明"])
+	fmt.Printf("type of a:%T\n", scoreMap)
+
+	//声明时填充元素
+	userinfo:=map[string]string{
+		"username":"沙河小王子",
+		"password":"12345",
+	}
+	fmt.Println(userinfo)
+
+	//查看键是否存在 value,ok:=map[key]
+	v, ok := scoreMap["小明"]  //key存在, ok为True, v为对应值; 否则ok为false, v值类型零值
+	if ok{
+		fmt.Println(v)
+	}else{
+		fmt.Println("查无此人")
+	}
+	
+	//map遍历 for...range
+	for k,v:= range scoreMap{
+		fmt.Println(k,v)
+	}
+	//只遍历key
+	for k:=range scoreMap{
+		fmt.Println(k)
+	}
+
+	//delete 删除键值对: delete(map, key)
+	delete(scoreMap,"小明")
+	fmt.Println(scoreMap)
+
+	//按指定顺序遍历map
+	rand.Seed(time.Now().UnixNano()) //初始化随机数种子
+	var scoremap = make(map[string]int, 200)
+	for i:=0;i<100;i++ {
+		key:=fmt.Sprintf("stu%02d", i)  //生stu开头的字符串
+		value:=rand.Intn(100)  //生成0-99的随机整数
+		scoremap[key]=value
+	}
+	//取出map中的所有key存入切片keys
+	var keys=make([]string,0,20)
+	for key:= range scoremap{
+		keys = append(keys, key)
+	}
+	//对切片进行排序
+	sort.Strings(keys)
+	//按照排序后的key 遍历map
+	// for _,key:=range keys{
+	// 	fmt.Println(key, scoremap[key])
+	// }
+
+	// 元素类型为map的切片
+	var mapSlice = make([]map[string]string, 3)
+	for index, value := range mapSlice{
+		fmt.Sprintf("index:%d value:%v\n", index, value)
+	}
+	fmt.Println("after init")
+	//对切片中的map元素进行初始化
+	mapSlice[0] = make(map[string]string, 10)
+	mapSlice[0]["name"]="小王子"
+	mapSlice[0]["password"] = "123456"
+	mapSlice[0]["address"] = "沙河"
+	for index, value:=range mapSlice{
+		fmt.Printf("index:%d value:%v\n", index, value)
+	}
+
+	//值为切片类型的map
+	var sliceMap = make(map[string][]string, 3)
+	fmt.Println(sliceMap)
+	fmt.Println("after init")
+	key:="中国"
+	value, ok:=sliceMap[key]
+	if !ok {
+		value = make([]string, 0, 2)
+	}
+	value = append(value, "北京", "上海")
+	sliceMap[key] = value
+	fmt.Println(sliceMap)
 }
 
 func main()  {
@@ -650,5 +748,8 @@ func main()  {
 	//revemulttale()
 	//arrdemo()
 	//modifydemo()
-	slice_demo()
+	// slice_demo()
+	// homework()
+	map_demo()
+
 }
